@@ -35,10 +35,21 @@ Policies
 ## Features
 
 ✅ Automated snapshot creation for ASG instances
+
 ✅ Email notification after backup completion
+
 ✅ Event-driven backup (no cron/schedule needed)
+
 ✅ Scalable and cost-efficient
+
 ✅ Optional cleanup logic for old snapshots
+
+## Folder Structure
+
+Automated-EBS-Snapshot-Backup-using-AWS-Lambda-SNS/
+│
+├── lambda_function.py
+└── README.md
 
 
 ## Implementation Steps
@@ -71,6 +82,7 @@ CleanupOnTerminate (optional for deleting old snapshots)
 
 
 ### step 3: Create SNS Topic
+
 Create a topic named: ebs-snapshot-notification
 Add an Email Subscription and confirm it from your inbox.
 
@@ -121,6 +133,7 @@ SNS_TOPIC_ARN = your SNS topic ARN
 
 
 ### Step 6: Connect ASG with Lambda
+
 Go to Auto Scaling Group → Lifecycle Hooks
 Edit BackupOnLaunch:
 Notification Target: SNS Topic
@@ -130,6 +143,7 @@ Repeat the same for CleanupOnTerminate if needed.
 
 
 ### Step 7: Test
+
 Scale up the Auto Scaling Group.
 When a new instance launches:
 Lambda will trigger automatically.
@@ -141,13 +155,6 @@ An email notification will be sent to your SNS subscriber.
 ![Architecture](images/img-9.png) 
 
 
-
-## Folder Structure
-
-Automated-EBS-Snapshot-Backup-using-AWS-Lambda-SNS/
-│
-├── lambda_function.py
-└── README.md
 
 
 ## Output
