@@ -1,14 +1,12 @@
 # Automated-EBS-Snapshot-Backup-using-AWS-Lambda-SNS
 Aws-project
 
-🧠 Project Overview
+## Project Overview
 
 This project automates the creation of EBS snapshots for EC2 instances managed by an Auto Scaling Group (ASG).
 It uses AWS Lambda, SNS, and Auto Scaling Lifecycle Hooks to automatically take EBS backups when new instances are launched — no need to manually tag volumes.
 
-🏗️ Architecture
-
-Components:
+## Architecture
 
 Auto Scaling Group (ASG): Manages EC2 instances automatically.
 Lifecycle Hooks: Trigger events when instances are launched or terminated.
@@ -23,7 +21,8 @@ Flow:
 
 
 
-⚙️ Technologies Used
+## Service Used 
+
 AWS EC2
 AWS Auto Scaling Group
 AWS Lambda (Python 3.12)
@@ -33,7 +32,7 @@ IAM Roles and Policies
 Policies
 
 
-🚀 Features
+## Features
 
 ✅ Automated snapshot creation for ASG instances
 ✅ Email notification after backup completion
@@ -42,9 +41,10 @@ Policies
 ✅ Optional cleanup logic for old snapshots
 
 
-🪜 Implementation Steps
+## Implementation Steps
 
-1. Create Launch Template :
+### Step 1: Create Launch Template 
+
 Define AMI, instance type, key pair, and security group.
 Add a tag:
 Key: Project
@@ -58,7 +58,8 @@ Value: EBSBackupASG
 
 
 
-2. Create Auto Scaling Group (ASG)
+### Step 2: Create Auto Scaling Group (ASG)
+
 Use the launch template created above.
 Configure desired capacity, subnets, and scaling policies.
 Add Lifecycle Hooks:
@@ -69,7 +70,7 @@ CleanupOnTerminate (optional for deleting old snapshots)
 ![Architecture](images/img-6.png)    
 
 
-3. Create SNS Topic
+### step 3: Create SNS Topic
 Create a topic named: ebs-snapshot-notification
 Add an Email Subscription and confirm it from your inbox.
 
@@ -87,7 +88,7 @@ Add an Email Subscription and confirm it from your inbox.
 
 
 
-4. Create IAM Role for Lambda
+### Step 4: Create IAM Role for Lambda
 
 Attach these policies to the role:
 
@@ -104,7 +105,8 @@ Name the role: LambdaEBSBackupASGRole
 
 
 
-5. Create Lambda Function
+### Step 5: Create Lambda Function
+
 Name: ASG_EBS_Backup
 Runtime: Python 3.12
 Role: LambdaEBSBackupASGRole
@@ -118,7 +120,7 @@ SNS_TOPIC_ARN = your SNS topic ARN
 
 
 
-6. Connect ASG with Lambda
+### Step 6: Connect ASG with Lambda
 Go to Auto Scaling Group → Lifecycle Hooks
 Edit BackupOnLaunch:
 Notification Target: SNS Topic
@@ -127,7 +129,7 @@ Lambda Trigger: ASG_EBS_Backup
 Repeat the same for CleanupOnTerminate if needed.
 
 
-7. Test
+### Step 7: Test
 Scale up the Auto Scaling Group.
 When a new instance launches:
 Lambda will trigger automatically.
@@ -140,14 +142,16 @@ An email notification will be sent to your SNS subscriber.
 
 
 
-🧩 Folder Structure
+## Folder Structure
+
 Automated-EBS-Snapshot-Backup-using-AWS-Lambda-SNS/
 │
 ├── lambda_function.py
 └── README.md
 
 
-📬 Output
+## Output
+
 Snapshots appear in EC2 → Snapshots
 
 Email notification from SNS showing snapshot IDs
